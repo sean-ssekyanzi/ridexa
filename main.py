@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from src.db.connection import init_db
 from contextlib import asynccontextmanager
 
+#main app
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("server is starting")
