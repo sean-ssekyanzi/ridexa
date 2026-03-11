@@ -10,6 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import datetime, timedelta
 from src.db.schemas import UserCreate
+import os
+from dotenv import load_dotenv
 
 
 
@@ -89,6 +91,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+port = int(os.environment.get("PORT",8000))
+app.run(host="0.0.0.0",
+        port=port)
 
 # class TransactionBase(BaseModel):
 #     amount: float

@@ -21,6 +21,19 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - db_data:/var/lib/postgresql/data
+  frontend:
+    container_name: "frontend"
+    build:
+      context: ./Frontend/frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_PORT=5173
+    develop:
+      watch:
+        - action: sync
+          path: ./Frontend/frontend
+          target: /frontend
 
 volumes:
-  db_data:  
+  db_data:
