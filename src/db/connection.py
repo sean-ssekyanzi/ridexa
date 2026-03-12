@@ -5,7 +5,7 @@ from src.db.models import Base
 from sqlalchemy.orm import sessionmaker
 
 #db url
-DB_URL = f"postgresql+asyncpg://{CONFIG.POSTGRES_USER}:{CONFIG.POSTGRES_PASSWORD}@db/{CONFIG.POSTGRES_DB}"
+DB_URL = "postgresql+asyncpg://ridexauser:niD9d6DMf9P6NLg6lxrYeuC3J7Xjy1hV@dpg-d6pbev2a214c738sbms0-a.oregon-postgres.render.com/ridexa"
 
 
 engine = create_async_engine(
