@@ -91,6 +91,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+print("Port test")
 port = int(os.environ.get("PORT",8000))
 
 # class TransactionBase(BaseModel):
