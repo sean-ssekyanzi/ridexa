@@ -1,15 +1,16 @@
 FROM ghcr.io/astral-sh/uv:debian-slim
 
+
 WORKDIR /app
 
 COPY pyproject.toml uv.lock /app/
 
-RUN uv sync --locked
+RUN uv sync --frozen
 
 COPY . /app/
 
-ENV PORT = 8000
+ENV PORT=10000
 
-EXPOSE 8000
+EXPOSE 10000
 
-CMD ["uv", "run", "uvicorn main:app", "--host 0.0.0.0", "--port $PORT"]
+CMD ["sh","-c","uv run uvicorn main:app --host 0.0.0.0 --port $PORT"]

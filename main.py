@@ -28,6 +28,11 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+@app.get("/")
+def main():
+    return {"message": "Hello World"}
+
+
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -45,9 +50,6 @@ async def verify_user_token(token: str):
     return {"message":"Token is valid"}
     
 
-@app.get("/")
-def main():
-    return {"message": "Hello World"}
 
 @app.get("/users/",response_model=list[UserCreate])
 async def read_users(db: AsyncSession = Depends(get_db)):
@@ -92,7 +94,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-print("Port test")
+print("Port test 1")
 port = int(os.environ.get("PORT",8000))
 
 # class TransactionBase(BaseModel):
