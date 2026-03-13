@@ -80,6 +80,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 
 origins = [
+    "https://ridexa-frntend.onrender.com",
     "http://localhost:5173",
     "http://localhost:8000",
     "http://localhost:3000",
