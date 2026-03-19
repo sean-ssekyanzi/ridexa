@@ -1,34 +1,152 @@
-import React, {useEffect} from "react"; 
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MovieCard from "../components/MovieCard";
+import MovieModal from "../components/MovieModal";
+import { searchMovies, getPopularMovies } from "../servcs/mapi";
+import BACKEND from "../config";
+import "../css/Protected.css";
+import "../css/Sidebar.css";
+
+const API_KEY = "83709bf5d24c0f1ceba692299ef89107";
+const BASE_URL = "https://api.themoviedb.org/3";
 
 function ProtectedPage() {
     const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState("");
+    const [movies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [top100, setTop100] = useState([]);
+    const [selected, setSelected] = useState(null);
+    const [isPremium, setIsPremium] = useState(false);
 
     useEffect(() => {
-        const verifyToken = async () => {
-            const token = localStorage.getItem('token');
-            console.log(token)
-        try {
-            const response = await fetch(`https://app-image6-latest.onrender.com/verify-token/${token}`);
-            if (!response.ok) {
-                throw new Error('Token verification failed');
-
+        const verifyAndCheckPremium = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) { navigate("/login"); return; }
+            try {
+                const res = await fetch(`${BACKEND}/me`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (res.status === 401) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("username");
+                    navigate("/login");
+                    return;
+                }
+                if (res.ok) {
+                    const data = await res.json();
+                    setIsPremium(data.is_premium);
+                }
+            } catch {
+                // network error — don't log out, just continue
             }
-        } catch (error) {
-            localStorage.removeItem('token');
-            navigate('/login');
+        };
+        verifyAndCheckPremium();
+    }, [navigate]);
+
+    useEffect(() => {
+        const fetchTop100 = async () => {
+            const pages = await Promise.all(
+                [1, 2, 3, 4, 5].map((p) =>
+                    fetch(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}&page=${p}`)
+                        .then((r) => r.json())
+                        .then((d) => d.results)
+                )
+            );
+            setTop100(pages.flat().slice(0, 100));
+        };
+        fetchTop100();
+    }, []);
+
+    useEffect(() => {
+        const loadPopularMovies = async () => {
+            try {
+                const popularMovies = await getPopularMovies();
+                setMovies(popularMovies);
+            } catch (err) {
+                console.log(err);
+                setError("Failed to load movies...");
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadPopularMovies();
+    }, []);
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (!searchQuery.trim()) return;
+        if (loading) return;
+        setLoading(true);
+        try {
+            const searchResults = await searchMovies(searchQuery);
+            setMovies(searchResults);
+            setError(null);
+        } catch (err) {
+            console.log(err);
+            setError("Failed to search movies...");
+        } finally {
+            setLoading(false);
         }
     };
 
-    verifyToken();
-}, [navigate]);
+    if (loading) return <div style={{ color: "white", textAlign: "center", padding: "2rem" }}>Loading...</div>;
 
-return (
-    <div>
-        <h1>Protected Page</h1>
-        <p>This page is only accessible to authenticated users.</p>
-    </div>
-);
+    return (
+        <div className="protected-layout">
+            {!isPremium && (
+                <div className="premium-banner">
+                    <span>👑 Unlock IMDb Top 100, ad-free streaming and more for <strong>$4.99/month</strong></span>
+                    <button className="premium-banner-btn" onClick={() => navigate('/premium')}>Become Premium</button>
+                </div>
+            )}
+            {isPremium && (
+            <aside className="sidebar">
+                <h2 className="sidebar-title">IMDb Top 100</h2>
+                <ol className="sidebar-list">
+                    {top100.map((movie, i) => (
+                        <li key={movie.id} className="sidebar-item" onClick={() => setSelected(movie)}>
+                            <span className="sidebar-rank">{i + 1}</span>
+                            <img
+                                className="sidebar-poster"
+                                src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`}
+                                alt={movie.title}
+                            />
+                            <div className="sidebar-info">
+                                <span className="sidebar-name">{movie.title}</span>
+                                <span className="sidebar-rating">⭐ {movie.vote_average.toFixed(1)}</span>
+                            </div>
+                        </li>
+                    ))}
+                </ol>
+            </aside>
+            )}
+
+            <div className="protected-main">
+                <form onSubmit={handleSearch} className="search-form">
+                    <input
+                        type="text"
+                        placeholder="Search for movies..."
+                        className="search-input"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <button type="submit" className="search-button">Search</button>
+                </form>
+
+                {error && <div className="error-message" style={{ color: "red", textAlign: "center", margin: "1rem 0" }}>{error}</div>}
+
+                <div className="protected-grid">
+                    {movies.map((movie) => (
+                        <MovieCard movie={movie} key={movie.id} />
+                    ))}
+                </div>
+            </div>
+
+            <MovieModal movie={selected} onClose={() => setSelected(null)} />
+        </div>
+    );
 }
 
 export default ProtectedPage;
