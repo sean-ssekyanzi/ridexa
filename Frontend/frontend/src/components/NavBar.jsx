@@ -70,7 +70,7 @@ function NavBar() {
                         <div className="user-dropdown">
                             <span className="dropdown-name">{username}{isPremium && <span className="premium-badge"> 👑</span>}</span>
                             {isPremium
-                                ? <button onClick={() => { navigate('/protected'); setOpen(false); }} className="dropdown-item">🎬 My Movies</button>
+                                ? <button onClick={() => { navigate('/movies'); setOpen(false); }} className="dropdown-item">🎬 My Movies</button>
                                 : <button onClick={() => { navigate('/premium'); setOpen(false); }} className="dropdown-item premium">👑 Go Premium</button>
                             }
                             <button onClick={handleLogout} className="dropdown-item logout">⏻ Logout</button>

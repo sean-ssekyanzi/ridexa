@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ProtectedPage from "./pages/Protected";
 import PremiumPage from "./pages/PremiumPage";
+import PremiumMovies from "./pages/PremiumMovies";
 import { Routes, Route } from "react-router-dom";
 import { MovieProvider } from "./contexts/MovieContext";
 import NavBar from "./components/NavBar";
@@ -18,10 +19,11 @@ function App() {
           <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/protected" element={<ProtectedPage />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/register" element={<RegistrationPage />} />
           <Route path="/premium" element={<PremiumPage />} />
+          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/protected" element={<ProtectedPage />} />
+          <Route path="/movies" element={<PremiumMovies />} />
           </Routes>
         </main>
       </div>
