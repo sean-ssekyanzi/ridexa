@@ -1,0 +1,135 @@
+.pay-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.pay-modal {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 14px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+  color: #e0e0e0;
+}
+
+.pay-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.pay-close:hover { color: #fff; }
+
+.pay-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: #fff;
+  text-align: center;
+}
+
+.pay-amount {
+  text-align: center;
+  color: #f5c518;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1.25rem;
+}
+
+.pay-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.pay-tab {
+  flex: 1;
+  padding: 0.5rem 0.25rem;
+  background: #2a2a4a;
+  border: 1px solid #3a3a6a;
+  border-radius: 6px;
+  color: #aaa;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pay-tab.active {
+  background: #f5c518;
+  color: #000;
+  border-color: #f5c518;
+  font-weight: 700;
+}
+
+.pay-tab:hover:not(.active) { background: #3a3a6a; color: #fff; }
+
+.pay-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pay-hint {
+  font-size: 0.82rem;
+  color: #aaa;
+  margin: 0;
+  text-align: center;
+}
+
+.pay-input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: #0f0f1e;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.pay-input:focus {
+  outline: none;
+  border-color: #f5c518;
+}
+
+.pay-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.pay-row .pay-input { flex: 1; }
+
+.pay-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.pay-btn:hover:not(:disabled) { opacity: 0.85; }
+
+.card-btn { background: #635bff; color: #fff; }
+.momo-btn { background: #ffcc00; color: #000; }
+
+.pay-error {
+  color: #e05555;
+  font-size: 0.82rem;
+  text-align: center;
+  margin: 0;
+}

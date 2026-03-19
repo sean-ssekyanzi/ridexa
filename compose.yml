@@ -1,39 +1,55 @@
 services:
-  app:
-    build: .
-    ports:
-      - "8000:8000"
-
-    develop:
-      watch:
-        - action : sync
-          path: .
-          target: /app
-          ignore:
-            - .venv/
-        - action: rebuild
-          path: pyproject.toml
   db:
-    image: postgres:16
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    ports:
+      - "8000:10000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - .venv/
+        - action: rebuild
+          path: pyproject.toml
+
   frontend:
-    container_name: "frontend"
+    container_name: frontend
     build:
       context: ./Frontend/frontend
     ports:
       - "5173:5173"
     environment:
-      - VITE_PORT=5173
+      - VITE_BACKEND_URL=http://localhost:8000
+      - VITE_PAYPAL_CLIENT_ID=${VITE_PAYPAL_CLIENT_ID}
+    depends_on:
+      - app
     develop:
       watch:
         - action: sync
-          path: ./Frontend/frontend
-          target: /frontend
+          path: ./Frontend/frontend/src
+          target: /frontend/src
+        - action: rebuild
+          path: ./Frontend/frontend/package.json
 
 volumes:
   db_data:
