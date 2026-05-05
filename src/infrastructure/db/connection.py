@@ -8,7 +8,7 @@ load_dotenv()
 
 DB_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+asyncpg://ridexauser:niD9d6DMf9P6NLg6lxrYeuC3J7Xjy1hV@dpg-d6pbev2a214c738sbms0-a.oregon-postgres.render.com/ridexa"
+    "postgresql://ridexauser:Ibcco0tE5dvfRqIRNVqLmLMz4LXjbOiC@dpg-d7sva03eo5us73eslfvg-a.oregon-postgres.render.com/ridexa2"
 )
 
 ssl_ctx = ssl.create_default_context()
