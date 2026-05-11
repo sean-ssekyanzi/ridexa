@@ -7,9 +7,8 @@ engine = create_async_engine(DB_URL, echo=False)
 
 
 async def init_db():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-        print("Database initialized.")
+    # Tables managed by Alembic migrations — skip create_all
+    print("Database ready.")
 
 
 AsyncSessionLocal = async_sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
