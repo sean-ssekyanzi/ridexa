@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from src.api.deps import get_user_repo, get_current_token_payload
 from src.application.user import get_current_user
 from src.infrastructure.db.repositories import SQLUserRepository
-from src.db.schemas import UserOut
+from src.infrastructure.db.schemas import UserOut
 
 router = APIRouter()
 

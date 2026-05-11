@@ -6,7 +6,7 @@ from src.application.user import get_current_user
 from src.application.subscription import activate_premium, cancel_premium, list_members
 from src.infrastructure.db.repositories import SQLUserRepository, SQLSubscriptionRepository
 from src.infrastructure.payment import stripe as stripe_adapter, paypal, momo
-from src.db.schemas import MemberOut
+from src.infrastructure.db.schemas import MemberOut
 
 router = APIRouter()
 
