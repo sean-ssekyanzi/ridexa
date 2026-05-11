@@ -1,4 +1,3 @@
-import ssl
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from src.infrastructure.db.orm_models import Base
 import os
@@ -8,12 +7,15 @@ load_dotenv()
 
 DB_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+asyncpg://ridexauser:niD9d6DMf9P6NLg6lxrYeuC3J7Xjy1hV@dpg-d6pbev2a214c738sbms0-a.oregon-postgres.render.com/ridexa"
+    "postgresql+asyncpg://ridexauser:Ibcco0tE5dvfRqIRNVqLmLMz4LXjbOiC@dpg-d7sva03eo5us73eslfvg-a.oregon-postgres.render.com/ridexa2"
 )
 
-ssl_ctx = ssl.create_default_context()
+# ensure asyncpg dialect and SSL
+DB_URL = DB_URL.replace("postgresql://", "postgresql+asyncpg://")
+if "ssl=" not in DB_URL:
+    DB_URL += "?ssl=require"
 
-engine = create_async_engine(DB_URL, echo=False, connect_args={"ssl": ssl_ctx})
+engine = create_async_engine(DB_URL, echo=False)
 
 
 async def init_db():
