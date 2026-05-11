@@ -5,13 +5,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DB_URL = os.getenv(
+_RAW_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+asyncpg://ridexauser:Ibcco0tE5dvfRqIRNVqLmLMz4LXjbOiC@dpg-d7sva03eo5us73eslfvg-a.oregon-postgres.render.com/ridexa2"
+    "postgresql://ridexauser:Ibcco0tE5dvfRqIRNVqLmLMz4LXjbOiC@dpg-d7sva03eo5us73eslfvg-a.oregon-postgres.render.com/ridexa2"
 )
 
-# Force asyncpg dialect regardless of what Render injects
-DB_URL = DB_URL.replace("postgresql://", "postgresql+asyncpg://").replace("postgres://", "postgresql+asyncpg://")
+# Strip any existing dialect prefix and rebuild with asyncpg
+_host = _RAW_URL.split("://", 1)[1]
+DB_URL = f"postgresql+asyncpg://{_host}"
 if "ssl=" not in DB_URL:
     DB_URL += "?ssl=require"
 
