@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from src.api.deps import get_user_repo
 from src.application.user import register_user, login_user
 from src.infrastructure.db.repositories import SQLUserRepository
-from src.db.schemas import UserCreate, UserOut
+from src.infrastructure.db.schemas import UserCreate, UserOut
 
 router = APIRouter()
 

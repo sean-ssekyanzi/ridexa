@@ -5,7 +5,7 @@ from src.db.models import Base
 from sqlalchemy.orm import sessionmaker
 
 #db url
-DB_URL = "postgresql://ridexauser:Ibcco0tE5dvfRqIRNVqLmLMz4LXjbOiC@dpg-d7sva03eo5us73eslfvg-a.oregon-postgres.render.com/ridexa2"
+DB_URL = "postgresql+asyncpg://ridexauser:Ibcco0tE5dvfRqIRNVqLmLMz4LXjbOiC@dpg-d7sva03eo5us73eslfvg-a.oregon-postgres.render.com/ridexa2?ssl=require"
 
 
 engine = create_async_engine(
