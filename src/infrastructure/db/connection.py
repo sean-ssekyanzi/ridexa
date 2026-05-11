@@ -10,8 +10,8 @@ DB_URL = os.getenv(
     "postgresql+asyncpg://ridexauser:Ibcco0tE5dvfRqIRNVqLmLMz4LXjbOiC@dpg-d7sva03eo5us73eslfvg-a.oregon-postgres.render.com/ridexa2"
 )
 
-# ensure asyncpg dialect and SSL
-DB_URL = DB_URL.replace("postgresql://", "postgresql+asyncpg://")
+# Force asyncpg dialect regardless of what Render injects
+DB_URL = DB_URL.replace("postgresql://", "postgresql+asyncpg://").replace("postgres://", "postgresql+asyncpg://")
 if "ssl=" not in DB_URL:
     DB_URL += "?ssl=require"
 
