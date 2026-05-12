@@ -13,6 +13,7 @@ function RegistrationPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [payTab, setPayTab] = useState('paypal');
     const [phone, setPhone] = useState('');
     const [card, setCard] = useState({ name: '', number: '', expiry: '', cvv: '' });
@@ -37,6 +38,8 @@ function RegistrationPage() {
             localStorage.setItem('username', username);
             window.dispatchEvent(new Event('login'));
             setError('');
+            setSuccess(true);
+            setTimeout(() => setSuccess(false), 3000);
             setStep(2);
         } catch (err) {
             setError(err.response?.data?.detail || 'An error occurred');
@@ -83,6 +86,7 @@ function RegistrationPage() {
         <div className="auth-page">
             <div className="auth-card" style={{ maxWidth: step === 2 ? 460 : 400 }}>
                 <div className="auth-logo">RIDEXA</div>
+                {success && <p style={{ textAlign: 'center', color: '#4caf50', fontSize: '0.85rem', margin: '0.5rem 0' }}>✅ Account created successfully!</p>}
 
                 {step === 1 ? (
                     <>
