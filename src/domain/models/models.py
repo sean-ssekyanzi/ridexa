@@ -11,6 +11,19 @@ class User:
 
 
 @dataclass
+class Movie:
+    id: int
+    title: str
+    description: str
+    release_year: int
+    genre: str
+    duration: int  # in minutes
+    is_premium: bool = False
+    created_at: datetime = field(default_factory=datetime.now)
+    updated_at: datetime = field(default_factory=datetime.now)
+
+
+@dataclass
 class Subscription:
     id: int
     user_id: int

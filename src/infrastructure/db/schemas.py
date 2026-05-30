@@ -1,25 +1,6 @@
-from pydantic import BaseModel
-from datetime import datetime
 
-class UserCreate(BaseModel):
-    username: str
-    password: str
-
-class UserOut(BaseModel):
-    username: str
-    is_premium: bool
-
-    class Config:
-        from_attributes = True
-
-class MemberOut(BaseModel):
-    username: str
-    status: str
-    started_at: datetime
-    expires_at: datetime | None = None
-
-    class Config:
-        from_attributes = True
+# Schemas moved to infrastructure/schemas/user.py
+from src.infrastructure.schemas.user import UserCreate, UserOut, MemberOut
 
 
 
