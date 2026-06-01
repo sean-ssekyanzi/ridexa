@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 # Re-export repository abstractions for convenience
 from .repositories import AbstractUserRepository, AbstractSubscriptionRepository
-from .events import AbstractDomainEventDispatcher
+from .events.events import AbstractDomainEventDispatcher
 
 # Aliases used by existing infrastructure code
 UserRepository = AbstractUserRepository

@@ -7,8 +7,11 @@ from src.infrastructure.di import get_service_container
 from src.infrastructure.container import Container
 from src.infrastructure.schemas.user import UserCreate, UserOut
 from src.application.services.user import UserService
+from src.domain.exceptions import UserAlreadyExistsError, UserNotFoundError, InvalidCredentialsError
+from fastapi import HTTPException
 
 router = APIRouter(tags=["auth", "users"])
+
 
 
 @router.post("/register")
@@ -18,7 +21,11 @@ async def register(
     user_service: UserService = Depends(Provide[Container.user_service]),
     container: Container = Depends(get_service_container)
 ):
-    return await user_service.register(user.username, user.password)
+    try:
+        return await user_service.register(user.username, user.password)
+    except UserAlreadyExistsError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 
 
 @router.post("/token")
@@ -28,8 +35,12 @@ async def login(
     user_service: UserService = Depends(Provide[Container.user_service]),
     container: Container = Depends(get_service_container)
 ):
-    token = await user_service.login(form_data.username, form_data.password)
-    return {"access_token": token, "token_type": "bearer"}
+    try:
+        token = await user_service.login(form_data.username, form_data.password)
+        return {"access_token": token, "token_type": "bearer"}
+    except InvalidCredentialsError as e:
+        raise HTTPException(status_code=401, detail=str(e), headers={"WWW-Authenticate": "Bearer"})
+
 
 
 @router.get("/me", response_model=UserOut)
@@ -39,7 +50,10 @@ async def me(
     user_service: UserService = Depends(Provide[Container.user_service]),
     container: Container = Depends(get_service_container)
 ):
-    return await user_service.get_current_user(payload["sub"])
+    try:
+        return await user_service.get_current_user(payload["sub"])
+    except UserNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
 
 @router.get("/users/", response_model=list[UserOut])

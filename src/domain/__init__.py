@@ -1,5 +1,5 @@
 from src.domain.models import User, Movie, Subscription
-from src.domain.events import (
+from src.domain.events.events import (
     DomainEvent,
     AbstractDomainEventDispatcher,
     UserRegisteredEvent,
