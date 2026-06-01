@@ -1,7 +1,7 @@
 [project]
 name = "ridexa"
 version = "0.1.0"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
     "alembic==1.18.4",
     "asyncpg==0.31.0",

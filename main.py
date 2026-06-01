@@ -1,19 +1,18 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.infrastructure.db.connection import init_db
-from src.api import auth, users, payments, admin
+from src.infrastructure.fast_api import create_app
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app):
     print("server is starting")
     await init_db()
     yield
     print("server is stopping")
 
 
-app = FastAPI(lifespan=lifespan)
+app = create_app(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,11 +26,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-app.include_router(auth.router)
-app.include_router(users.router)
-app.include_router(payments.router)
-app.include_router(admin.router)
 
 
 @app.get("/")

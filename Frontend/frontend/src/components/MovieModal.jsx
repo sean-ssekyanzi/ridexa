@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import "../css/MovieModal.css";
 import { usePremium } from "../hooks/usePremium";
+import { STREAM_HOST } from "../config";
 
 const API_KEY = "83709bf5d24c0f1ceba692299ef89107";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -41,7 +42,7 @@ export default function MovieModal({ movie, onClose }) {
     setIframeKey((k) => k + 1);
   };
 
-  // listen for time response from vidsrc
+  // listen for time response from the embedded video host
   useEffect(() => {
     const onMessage = (e) => {
       if (e.data?.currentTime !== undefined) {
@@ -105,15 +106,23 @@ export default function MovieModal({ movie, onClose }) {
           {playing ? (
             embedError ? (
               <div className="embed-error">
-                ⚠️ Stream unavailable for this title.
+                <p>⚠️ Stream unavailable for this title. The video host may be offline or blocked.</p>
                 <button onClick={() => { setPlaying(false); setEmbedError(false); }}>Go back</button>
+                {trailerId && (
+                  <a
+                    className="trailer-btn"
+                    href={`https://www.youtube.com/watch?v=${trailerId}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >Watch the trailer instead</a>
+                )}
               </div>
             ) : (
               <>
                 <iframe
                   ref={iframeRef}
                   key={iframeKey}
-                  src={`https://vidsrc.icu/embed/movie/${movie.id}${timestamp ? `#t=${timestamp}` : ""}`}
+                  src={`${STREAM_HOST}/embed/movie/${movie.id}${timestamp ? `#t=${timestamp}` : ""}`}
                   title={movie.title}
                   width={qualityDims[quality].w}
                   height={qualityDims[quality].h}
