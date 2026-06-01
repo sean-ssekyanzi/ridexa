@@ -36,7 +36,7 @@ Ridexa lets users browse movies, search, save favourites, and stream titles in-a
 | Auth | JWT (python-jose), bcrypt (passlib) |
 | Payments | Stripe (card), PayPal, MTN MoMo |
 | Movie Data | TMDB API |
-| Video Player | vidsrc.icu embed |
+| Video Player | Configurable embedded host (default: `https://vidsrc.to`) |
 | Deployment | Render (backend + DB), Docker Compose (local) |
 
 ---
