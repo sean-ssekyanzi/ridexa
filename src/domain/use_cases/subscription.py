@@ -17,20 +17,3 @@ class AbstractSubscriptionUseCases(ABC):
     @abstractmethod
     async def list_members(self, sub_repo: AbstractSubscriptionRepository) -> list[tuple[User, Subscription]]: ...
 
-
-class AbstractUserService(ABC):
-
-    @abstractmethod
-    async def register(self, username: str, password: str) -> User: ...
-
-    @abstractmethod
-    async def login(self, username: str, password: str) -> str: ...
-
-    @abstractmethod
-    async def get_current_user(self, username: str) -> User: ...
-
-    @abstractmethod
-    async def list_users(self) -> list[User]: ...
-
-
-

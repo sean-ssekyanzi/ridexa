@@ -3,7 +3,7 @@ from src.domain.events.events import PremiumActivatedEvent, PremiumCancelledEven
 from src.domain.models import User, Subscription
 from src.domain.repositories import AbstractUserRepository, AbstractSubscriptionRepository
 from src.domain.use_cases import AbstractSubscriptionUseCases
-from src.domain.exceptions import SubscriptionNotFoundError
+from src.domain.models.exceptions import SubscriptionNotFoundError
 
 
 class SubscriptionService(AbstractSubscriptionUseCases):

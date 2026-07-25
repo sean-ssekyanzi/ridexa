@@ -1,7 +1,6 @@
 import os
 import stripe
-from fastapi import HTTPException, Request
-from src.domain.ports import PaymentPort
+from fastapi import HTTPException
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")

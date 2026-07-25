@@ -3,9 +3,9 @@ from fastapi import APIRouter, Depends, Request
 from src.infrastructure.auth import get_current_token_payload
 from src.infrastructure.di import get_service_container
 from src.infrastructure.container import Container
-from src.infrastructure.handlers.models import PayPalConfirm, MomoRequest
+from src.infrastructure.handlers.user_models import PayPalConfirm, MomoRequest
 from src.infrastructure.payment import stripe as stripe_adapter, paypal, momo
-from src.infrastructure.schemas.user import MemberOut
+from src.infrastructure.handlers.user_models import MemberOut
 from src.application.services.user import UserService
 from src.application.services.subscription import SubscriptionService
 

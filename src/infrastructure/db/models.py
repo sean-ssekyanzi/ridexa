@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime, ForeignKey
+from sqlalchemy import String, Boolean, DateTime, ForeignKey
 from datetime import datetime
 
 class Base(DeclarativeBase):
@@ -29,17 +29,3 @@ class Subscription(Base):
 
     user: Mapped["User"] = relationship(back_populates="subscription")
 
-    # def __repr__(self):
-    #     return f"<User(id={self.id}, username='{self.username}', email='{self.email}', password='{self.hashed_password}')>"
-    
-
-# class Transaction(Base):
-#     __tablename__ = "transactions"
-
-#     id = Column(Integer, primary_key=True, index=True)
-#     amount = Column(Float)
-#     category = Column(String)
-#     description = Column(String)
-#     is_income = Column(Boolean)
-#     date = Column(String)
-    

@@ -45,19 +45,6 @@ class UserIdentity:
 
 
 @dataclass
-class SubscriptionActivationData:
-    user_id: int
-    stripe_customer_id: str | None = None
-    stripe_subscription_id: str | None = None
-    metadata: dict[str, Any] = field(default_factory=dict)
-
-
-@dataclass
-class SubscriptionCancelData:
-    stripe_subscription_id: str
-
-
-@dataclass
 class PayPalConfirm:
     order_id: str
 

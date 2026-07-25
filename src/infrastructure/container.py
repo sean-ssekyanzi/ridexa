@@ -1,11 +1,14 @@
 from dependency_injector import containers, providers
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.infrastructure.db.repositories import SQLUserRepository, SQLSubscriptionRepository, SQLAuthRepository
+from src.infrastructure.db.user import SQLUserRepository
+from src.infrastructure.db.subscription import SQLSubscriptionRepository
+from src.infrastructure.db.auth import SQLAuthRepository
 from src.infrastructure.events import InMemoryEventDispatcher
 from src.application.services.user import UserService
 from src.application.services.subscription import SubscriptionService
 from src.infrastructure.handlers import Handlers
-from src.infrastructure.handlers.handlers import UserHandler, SubscriptionHandler
+from src.infrastructure.handlers.user_handlers import UserHandler
+from src.infrastructure.handlers.subscription_handler import SubscriptionHandler
 
 
 class Container(containers.DeclarativeContainer):

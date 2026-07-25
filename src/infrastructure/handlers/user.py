@@ -1,13 +1,12 @@
 from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from src.infrastructure.handlers.models import UserCredentials
 from src.infrastructure.auth import get_current_token_payload
 from src.infrastructure.di import get_service_container
 from src.infrastructure.container import Container
-from src.infrastructure.schemas.user import UserCreate, UserOut
+from src.infrastructure.handlers.user_models import UserCreate, UserOut
 from src.application.services.user import UserService
-from src.domain.exceptions import UserAlreadyExistsError, UserNotFoundError, InvalidCredentialsError
+from src.domain.models.exceptions import UserAlreadyExistsError, UserNotFoundError, InvalidCredentialsError
 from fastapi import HTTPException
 
 router = APIRouter(tags=["auth", "users"])

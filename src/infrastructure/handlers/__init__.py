@@ -3,8 +3,8 @@ import os
 from types import ModuleType
 from typing import Iterator
 
-from src.infrastructure.handlers.handlers import UserHandler, SubscriptionHandler
-from src.infrastructure.handlers.models import (
+from src.infrastructure.handlers.user_handlers import UserHandler, SubscriptionHandler
+from src.infrastructure.handlers.user_models import (
     UserCredentials,
     UserIdentity,
     SubscriptionActivationData,

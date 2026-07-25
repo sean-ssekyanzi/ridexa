@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-from src.infrastructure.db.orm_models import Base
+from src.infrastructure.db.models import Base
 
 DB_URL = "postgresql+asyncpg://ridexauser:Ibcco0tE5dvfRqIRNVqLmLMz4LXjbOiC@dpg-d7sva03eo5us73eslfvg-a.oregon-postgres.render.com/ridexa2?ssl=require"
 

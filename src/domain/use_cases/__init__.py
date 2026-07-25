@@ -1,4 +1,4 @@
-from src.domain.use_cases.abstracts import (
+from src.domain.use_cases.subscription import (
     AbstractSubscriptionUseCases,
     AbstractUserService,
 )
